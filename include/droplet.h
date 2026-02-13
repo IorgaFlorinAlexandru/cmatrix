@@ -3,23 +3,16 @@
 
 #pragma once
 
-typedef enum {
-  SLOW,
-  NORMAL,
-  FAST
-} Speed;
-
 // SPEED, POS,
 typedef struct {
   int length;
   int head;
   int tail;
   int pos;
-  Speed speed;
+  int speed;
 } Droplet;
 
-
-void advance_droplet(Droplet *droplet, int rows, int cols, char **grid);
+void advance_droplet(Droplet *droplet, int rows, char **grid, int tick);
 Droplet* create_droplet(int cols);
 
 #endif

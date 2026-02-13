@@ -1,20 +1,31 @@
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
 #include <sys/ioctl.h>
-#include "cmatrix.h"
 #include "cloud.h"
 
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define YELLOW "\033[33m"
-#define BLUE "\033[34m"
-#define RESET "\033[0m"
+//#define RED "\033[31m"
+//#define GREEN "\033[32m"
+//#define YELLOW "\033[33m"
+//#define BLUE "\033[34m"
+//#define RESET "\033[0m"
 
-const int DEBUG_TIME = 100*1000;
+#define HIDE_CURSOR "\033[?25l"
+#define SHOW_CURSOR "\033[?25h"
 
-int get_terminal_size(int *row, int *col) {
+const static int DEBUG_TIME = 100*1000;
+const static int SLEEP_TIME = 66*1000;
+
+static volatile sig_atomic_t isRaining = 1;
+
+static void on_sigint(int sig) {
+  (void)sig;
+  isRaining = 0;
+}
+
+static int get_terminal_size(int *row, int *col) {
   struct winsize ws;
   if(ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == 0 && ws.ws_col > 0 && ws.ws_row > 0) {
     *row = ws.ws_row;
@@ -31,20 +42,13 @@ int main() {
     printf("Failed to acquire terminal size\n");
     return 0;
   }
-
   srand(time(NULL));
-
   Cloud *c = initialize_cloud(rows,cols);
-  c->grid[rows-2][2] = '1';
   printf(HIDE_CURSOR);
-  int t = 0, i = 0;
-  while(t < 30) {
-    printf(ANSI_CLEAR ANSI_HOME);
-    draw_grid(c);
-    fflush(stdout);
+  
+  signal(SIGINT, on_sigint);
+  while(isRaining) {
     rain(c);
-    t++;
-
     usleep(DEBUG_TIME);
   }
 

@@ -4,12 +4,20 @@
 #include <string.h>
 #include <stdlib.h>
 
-const int DROPLETS_SIZE = 5;
+#define ANSI_CLEAR "\033[0J"
+#define ANSI_HOME "\033[H"
 
 void rain(Cloud *c) {
-  for(size_t i = 0; i < DROPLETS_SIZE; i++) {
-    advance_droplet(&c->droplets[i], c->rows,c->cols, c->grid);
+  static unsigned int tick = 1;
+
+  printf(ANSI_CLEAR ANSI_HOME);
+  draw_grid(c); // for colors i could use another array to keep what color to use in that position
+  fflush(stdout);
+
+  for(size_t i = 0; i < c->cols; i++) {
+    advance_droplet(&c->droplets[i], c->rows,c->grid,tick);
   }
+  tick++;
 }
 
 Cloud* initialize_cloud(int rows,int cols) {
@@ -18,9 +26,9 @@ Cloud* initialize_cloud(int rows,int cols) {
   c->cols = cols;
   c->grid = construct_grid(rows-1,cols);
 
-  c->droplets = malloc(DROPLETS_SIZE * sizeof *c->droplets);
-  for(size_t i = 0; i < DROPLETS_SIZE; i++) {
-    c->droplets[i] = *create_droplet(cols);
+  c->droplets = malloc(c->cols * sizeof *c->droplets);
+  for(size_t i = 0; i < c->cols; i++) {
+    c->droplets[i] = *create_droplet(i);
   }
 
   return c;
