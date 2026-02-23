@@ -3,13 +3,15 @@
 
 #pragma once
 
-// SPEED, POS,
+#include <stdint.h>
+
+// for colors i could use another array to keep what color to use in that position
 typedef struct {
   int length;
   int head;
   int tail;
-  int pos;
-  int speed;
+  unsigned int pos;
+  uint8_t speed;
 } Droplet;
 
 void advance_droplet(Droplet *droplet, int rows, char **grid, int tick);

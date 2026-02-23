@@ -13,8 +13,6 @@ typedef struct {
 } Cloud;
 
 Cloud* initialize_cloud(int rows, int cols);
-void draw_grid(Cloud *c);
-char** construct_grid(int rows,int cols);
 void rain(Cloud *c);
 
 #endif

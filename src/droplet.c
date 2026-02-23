@@ -36,6 +36,6 @@ Droplet* create_droplet(int pos) {
   d->tail = 0;
   d->length = (rand() % MAX_LENGTH) + MIN_LENGTH;
   d->pos = pos;
-  d->speed = (rand() % 6) + 1;
+  d->speed = 1;//(rand() % 6) + 1;
   return d;
 }
