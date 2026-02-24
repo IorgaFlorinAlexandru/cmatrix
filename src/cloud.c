@@ -31,11 +31,17 @@ void rain(Cloud *c) {
   static unsigned int tick = 1;
   draw_grid(c); 
   for(size_t i = 0; i < c->cols; i++) {
-    advance_droplet(&c->droplets[i], c->rows,c->grid,tick);
+    if(c->droplets[i].isAlive) {
+      advance_droplet(&c->droplets[i],c->grid,tick);
+    }
+    else {
+      reset(&c->droplets[i]);
+    }
   }
   tick++;
 }
 
+// Fix rows-1 bug
 Cloud* initialize_cloud(int rows,int cols) {
   Cloud *c = malloc(sizeof *c);
   c->rows = rows-1;
@@ -44,7 +50,7 @@ Cloud* initialize_cloud(int rows,int cols) {
 
   c->droplets = malloc(c->cols * sizeof *c->droplets);
   for(size_t i = 0; i < c->cols; i++) {
-    c->droplets[i] = *create_droplet(i);
+    c->droplets[i] = *create_droplet(i,rows-1);
   }
 
   return c;

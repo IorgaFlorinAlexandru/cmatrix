@@ -4,17 +4,21 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdbool.h>
 
-// for colors i could use another array to keep what color to use in that position
 typedef struct {
+  bool isAlive;
   int length;
   int head;
   int tail;
-  unsigned int pos;
+  unsigned int boundCol;
+  unsigned int endLine;
   uint8_t speed;
 } Droplet;
 
-void advance_droplet(Droplet *droplet, int rows, char **grid, int tick);
-Droplet* create_droplet(int cols);
+void advance_droplet(Droplet *droplet, char **grid, int tick);
+Droplet* create_droplet(int col, int rows);
+void reset(Droplet *droplet);
+void activate(Droplet *droplet);
 
 #endif

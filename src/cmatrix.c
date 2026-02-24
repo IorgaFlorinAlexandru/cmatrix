@@ -88,9 +88,9 @@ static void testRedTheme() {
 }
 
 int main() {
-  testGreenTheme();
-  testRedTheme();
-  return 0;
+  //testGreenTheme();
+  //testRedTheme();
+  //return 0;
 
   int rows, cols;
   if(get_terminal_size(&rows, &cols) != 0) {
