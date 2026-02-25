@@ -4,6 +4,8 @@
 const int MAX_LENGTH = 15;
 const int MIN_LENGTH = 3;
 
+static const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
 void advance_droplet(Droplet *droplet, char **grid,int tick) {
   //Speed
   if(tick%droplet->speed != 0) {
@@ -17,7 +19,7 @@ void advance_droplet(Droplet *droplet, char **grid,int tick) {
 
   //Move action
   if(droplet->head < droplet->endLine) {
-    grid[droplet->head][droplet->boundCol] = '1';
+    grid[droplet->head][droplet->boundCol] = charset[rand() % 62];
     droplet->head++;
   }
   else {
