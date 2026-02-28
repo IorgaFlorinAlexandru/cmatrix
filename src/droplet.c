@@ -1,10 +1,14 @@
 #include "droplet.h"
 #include <stdlib.h>
 
-const int MAX_LENGTH = 15;
+const int MAX_LENGTH = 5;
 const int MIN_LENGTH = 3;
 
 static const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+static char random_char() {
+  return charset[rand() % 62];
+}
 
 void advance_droplet(Droplet *droplet, char **grid,int tick) {
   //Speed
@@ -19,7 +23,7 @@ void advance_droplet(Droplet *droplet, char **grid,int tick) {
 
   //Move action
   if(droplet->head < droplet->endLine) {
-    grid[droplet->head][droplet->boundCol] = charset[rand() % 62];
+    grid[droplet->head][droplet->boundCol] = random_char();
     droplet->head++;
   }
   else {

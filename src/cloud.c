@@ -1,17 +1,30 @@
 #include "cloud.h"
+#include "cmatrix.h"
 #include "droplet.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-#define ANSI_CLEAR "\033[0J"
-#define ANSI_HOME "\033[H"
-
 static void draw_grid(Cloud *c) {
   printf(ANSI_CLEAR ANSI_HOME);
+  printf(BACKGROUND_BLACK COLOR_GREEN_100); 
   for(size_t i = 0; i < c->rows; i++) {
-    printf("%s\n", c->grid[i]);
+    printf("%s", c->grid[i]);
   }
+  printf(ANSI_RESET);
+  // Might be worth to have a buffer then fwrite it all
+  //for(size_t i = 0; i < c->rows; i++) {
+  //  for(size_t j = 0; j < c->cols; j++) {
+  //    Droplet d = c->droplets[j];
+  //    if(d.head-1 == i) {
+  //      printf("%s", classic_theme[0]);
+  //    }
+  //    else {
+  //      printf("%s", classic_theme[1]);
+  //    }
+  //    printf("%c", c->grid[i][j]);
+  //  }
+  //}
   fflush(stdout);
 }
 
@@ -41,16 +54,15 @@ void rain(Cloud *c) {
   tick++;
 }
 
-// Fix rows-1 bug
 Cloud* initialize_cloud(int rows,int cols) {
   Cloud *c = malloc(sizeof *c);
-  c->rows = rows-1;
+  c->rows = rows;
   c->cols = cols;
-  c->grid = construct_grid(rows-1,cols);
+  c->grid = construct_grid(rows,cols);
 
   c->droplets = malloc(c->cols * sizeof *c->droplets);
-  for(size_t i = 0; i < c->cols; i++) {
-    c->droplets[i] = *create_droplet(i,rows-1);
+  for(size_t i = 0; i < cols; i++) {
+    c->droplets[i] = *create_droplet(i,rows);
   }
 
   return c;
