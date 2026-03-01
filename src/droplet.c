@@ -1,7 +1,6 @@
 #include "droplet.h"
 #include <stdlib.h>
 
-const int MAX_LENGTH = 5;
 const int MIN_LENGTH = 3;
 
 static const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -38,7 +37,7 @@ Droplet* create_droplet(int col, int rows) {
   d->isAlive = true;
   d->head = 0;
   d->tail = 0;
-  d->length = (rand() % MAX_LENGTH) + MIN_LENGTH;
+  d->length = (rand() % (rows-5)) + MIN_LENGTH;
   d->boundCol = col;
   d->endLine = rows;
   d->speed = (rand() % 3) + 1;
@@ -48,7 +47,7 @@ Droplet* create_droplet(int col, int rows) {
 void reset(Droplet *d) {
   d->head = 0;
   d->tail = 0;
-  d->length = (rand() % MAX_LENGTH) + MIN_LENGTH;
+  d->length = (rand() % (d->endLine-5)) + MIN_LENGTH;
   d->speed = (rand() % 3) + 1;
   d->isAlive = true;
 }
