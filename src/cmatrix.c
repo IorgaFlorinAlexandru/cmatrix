@@ -28,6 +28,7 @@ static int get_terminal_size(int *row, int *col) {
   return -1;
 }
 
+//TODO: Free Memory
 static void cleanup() {
   printf(SHOW_CURSOR);
   printf(ANSI_RESET);

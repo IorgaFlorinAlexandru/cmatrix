@@ -13,18 +13,6 @@ static void draw_grid(Cloud *c) {
   }
   printf(ANSI_RESET);
   // Might be worth to have a buffer then fwrite it all
-  //for(size_t i = 0; i < c->rows; i++) {
-  //  for(size_t j = 0; j < c->cols; j++) {
-  //    Droplet d = c->droplets[j];
-  //    if(d.head-1 == i) {
-  //      printf("%s", classic_theme[0]);
-  //    }
-  //    else {
-  //      printf("%s", classic_theme[1]);
-  //    }
-  //    printf("%c", c->grid[i][j]);
-  //  }
-  //}
   fflush(stdout);
 }
 
