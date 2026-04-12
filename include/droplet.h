@@ -19,6 +19,5 @@ typedef struct {
 void advance_droplet(Droplet *droplet, char **grid, int tick);
 Droplet* create_droplet(int col, int rows);
 void reset(Droplet *droplet);
-void activate(Droplet *droplet);
 
 #endif

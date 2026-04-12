@@ -7,8 +7,8 @@
 #include "cloud.h"
 #include "cmatrix.h"
 
-const static int DEBUG_TIME = 100*1000;
-const static int SLEEP_TIME = 33*1000;
+const static int DEBUG_TIME = 100000;
+const static int SLEEP_TIME = 33000;
 
 static volatile sig_atomic_t isRaining = 1;
 
@@ -49,9 +49,11 @@ int main() {
   system("clear");
   Cloud *c = initialize_cloud(rows,cols);
   printf(HIDE_CURSOR);
+  unsigned int tick = 1;
   while(isRaining) {
-    rain(c);
+    rain(c,tick);
     usleep(DEBUG_TIME);
+    tick++;
   }
   cleanup();
 

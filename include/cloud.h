@@ -13,6 +13,6 @@ typedef struct {
 } Cloud;
 
 Cloud* initialize_cloud(int rows, int cols);
-void rain(Cloud *c);
+void rain(Cloud *c, unsigned int tick);
 
 #endif

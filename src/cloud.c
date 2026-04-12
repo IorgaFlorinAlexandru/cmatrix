@@ -28,9 +28,13 @@ static char** construct_grid(int rows,int cols) {
   return grid;
 }
 
-void rain(Cloud *c) {
-  static unsigned int tick = 1;
+static void add_droplets(Cloud *c) {
+  
+}
+
+void rain(Cloud *c, unsigned int tick) {
   draw_grid(c); 
+
   for(size_t i = 0; i < c->cols; i++) {
     if(c->droplets[i].isAlive) {
       advance_droplet(&c->droplets[i],c->grid,tick);
@@ -39,7 +43,6 @@ void rain(Cloud *c) {
       reset(&c->droplets[i]);
     }
   }
-  tick++;
 }
 
 Cloud* initialize_cloud(int rows,int cols) {

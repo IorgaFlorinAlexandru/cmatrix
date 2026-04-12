@@ -21,7 +21,7 @@ void advance_droplet(Droplet *droplet, char **grid,int tick) {
   }
 
   //Move action
-  if(droplet->head < droplet->endLine) {
+  if(droplet->head >= 0 && droplet->head < droplet->endLine) {
     grid[droplet->head][droplet->boundCol] = random_char();
     droplet->head++;
   }
@@ -35,7 +35,7 @@ void advance_droplet(Droplet *droplet, char **grid,int tick) {
 Droplet* create_droplet(int col, int rows) {
   Droplet *d = malloc(sizeof *d);
   d->isAlive = true;
-  d->head = 0;
+  d->head = ((rand() % 10) + 1)*-1;
   d->tail = 0;
   d->length = (rand() % (rows-5)) + MIN_LENGTH;
   d->boundCol = col;
